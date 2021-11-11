@@ -2,11 +2,9 @@ import express from 'express';
 import rTracer from 'cls-rtracer';
 import morgan from 'morgan';
 import swaggerUi from "swagger-ui-express";
-
 import ErrorHandler from './handler/ErrorHandler';
-import routes from './routes';
-
-
+import routes from './router';
+import Database from "./database";
 
 const CONFIG = {
     PORT: 8008
@@ -14,19 +12,21 @@ const CONFIG = {
 
 // https://stackoverflow.com/questions/66365090/introducing-a-express-middleware-in-nodejs-typescript-oop
 class Server {
-    public app = express();
-    public router = routes;
+    app = express();
+    db = new Database();
+    routes = new routes(this.db);
 
     constructor(
     ) {
         this.correlationalIdMiddleware();
         this.loggingMiddleware();
+        this.openAPIMiddleware();
         this.routingMiddleware();
         this.errorHandlingMiddleWare();
-        this.openAPIMiddleware();
     }
 
     // ***********************************************************************
+
     correlationalIdMiddleware() {
         this.app.use(rTracer.expressMiddleware());
     }
@@ -64,16 +64,17 @@ class Server {
     // ***********************************************************************
 
     openAPIMiddleware() {
-        this.app.use("/docs", swaggerUi.serve,  swaggerUi.setup(undefined, {
+        this.app.use("/docs", swaggerUi.serve,  swaggerUi.setup(   undefined,{
                 swaggerOptions: {
                     url: "/swagger.json",
                 },
             })
         );
+        this.app.use(express.static("public"));
     }
 
     routingMiddleware() {
-        this.app.use('/api', this.router);
+        this.app.use('/api', this.routes.router);
     }
 
 }

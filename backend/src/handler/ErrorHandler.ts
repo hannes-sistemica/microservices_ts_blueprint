@@ -1,3 +1,4 @@
+// FIXME: make something, maybe use an error handler to catch all exceptions
 class ErrorHandler  {
     statusCode: number;
     message: string;

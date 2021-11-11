@@ -17,6 +17,161 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Car": {
+				"properties": {
+					"car_ID": {
+						"type": "number",
+						"format": "double"
+					},
+					"symboling": {
+						"type": "number",
+						"format": "double"
+					},
+					"CarName": {
+						"type": "string"
+					},
+					"fueltype": {
+						"type": "string"
+					},
+					"aspiration": {
+						"type": "string"
+					},
+					"doornumber": {
+						"type": "string"
+					},
+					"carbody": {
+						"type": "string"
+					},
+					"drivewheel": {
+						"type": "string"
+					},
+					"enginelocation": {
+						"type": "string"
+					},
+					"wheelbase": {
+						"type": "number",
+						"format": "double"
+					},
+					"carlength": {
+						"type": "number",
+						"format": "double"
+					},
+					"carwidth": {
+						"type": "number",
+						"format": "double"
+					},
+					"carheight": {
+						"type": "number",
+						"format": "double"
+					},
+					"curbweight": {
+						"type": "number",
+						"format": "double"
+					},
+					"enginetype": {
+						"type": "string"
+					},
+					"cylindernumber": {
+						"type": "string"
+					},
+					"enginesize": {
+						"type": "number",
+						"format": "double"
+					},
+					"fuelsystem": {
+						"type": "string"
+					},
+					"boreratio": {
+						"type": "number",
+						"format": "double"
+					},
+					"stroke": {
+						"type": "number",
+						"format": "double"
+					},
+					"compressionratio": {
+						"type": "number",
+						"format": "double"
+					},
+					"horsepower": {
+						"type": "number",
+						"format": "double"
+					},
+					"peakrpm": {
+						"type": "number",
+						"format": "double"
+					},
+					"citympg": {
+						"type": "number",
+						"format": "double"
+					},
+					"highwaympg": {
+						"type": "number",
+						"format": "double"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"car_ID",
+					"symboling",
+					"CarName",
+					"fueltype",
+					"aspiration",
+					"doornumber",
+					"carbody",
+					"drivewheel",
+					"enginelocation",
+					"wheelbase",
+					"carlength",
+					"carwidth",
+					"carheight",
+					"curbweight",
+					"enginetype",
+					"cylindernumber",
+					"enginesize",
+					"fuelsystem",
+					"boreratio",
+					"stroke",
+					"compressionratio",
+					"horsepower",
+					"peakrpm",
+					"citympg",
+					"highwaympg",
+					"price"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CarResponse": {
+				"properties": {
+					"response": {
+						"$ref": "#/components/schemas/Car"
+					}
+				},
+				"required": [
+					"response"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CarsResponse": {
+				"properties": {
+					"response": {
+						"items": {
+							"$ref": "#/components/schemas/Car"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"response"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -31,7 +186,7 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/ping": {
+		"/api/ping": {
 			"get": {
 				"operationId": "GetMessage",
 				"responses": {
@@ -41,6 +196,54 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/PingResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/car/{id}": {
+			"get": {
+				"operationId": "GetCarById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CarResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/cars": {
+			"get": {
+				"operationId": "GetCars",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CarsResponse"
 								}
 							}
 						}
