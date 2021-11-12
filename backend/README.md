@@ -44,7 +44,7 @@ Links
 - https://medium.com/@evgeni.kisel/add-correlation-id-in-node-js-applications-fde759eed5e3
 
 
-##Logging
+## Logging
 - https://adrianhesketh.com/2017/12/07/adding-a-timestamp-and-additional-fields-to-log-entries-with-winston-for-node-js/
 - https://coralogix.com/blog/complete-winston-logger-guide-with-hands-on-examples/
 - https://levelup.gitconnected.com/better-logs-for-expressjs-using-winston-and-morgan-with-typescript-1c31c1ab9342
@@ -52,7 +52,7 @@ Links
 - https://www.loggly.com/ultimate-guide/node-logging-basics/
 - https://stackoverflow.com/questions/50048193/how-are-you-supposed-to-create-winston-logger-stream-for-morgan-in-typescript
 
-#DataDog
+# DataDog
 
 - https://docs.datadoghq.com/agent/logs/?tab=tailfiles
 - https://docs.datadoghq.com/agent/docker/log/?tab=containerinstallation#installation
