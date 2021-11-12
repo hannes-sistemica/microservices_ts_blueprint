@@ -205,7 +205,7 @@
 				"parameters": []
 			}
 		},
-		"/api/car/{id}": {
+		"/api/car/id/{id}": {
 			"get": {
 				"operationId": "GetCarById",
 				"responses": {
@@ -229,6 +229,34 @@
 						"schema": {
 							"format": "double",
 							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/car/name/{name}": {
+			"get": {
+				"operationId": "GetCarByName",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CarResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "name",
+						"required": true,
+						"schema": {
+							"type": "string"
 						}
 					}
 				]

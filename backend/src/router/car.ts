@@ -15,9 +15,15 @@ export default class Router {
     }
 
     private routes(): void {
-        this.router.get("/:id", async (_req, res) => {
+        this.router.get("/id/:id", async (_req, res) => {
             const carId = parseInt(_req.params.id, 10);
             const response = await this.car.getCarById(carId);
+            if (!response) res.status(404).send({message: "No car found"})
+            return res.json(response);
+        });
+        this.router.get("/name/:name", async (_req, res) => {
+            const carName = _req.params.name;
+            const response = await this.car.getCarByName(carName);
             if (!response) res.status(404).send({message: "No car found"})
             return res.json(response);
         });

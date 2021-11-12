@@ -17,6 +17,7 @@ export default class CarsController {
 
     @Get("/")
     public async getCars(): Promise<CarsResponse> {
+        // FIXME add a debug log entry, with module name, other context infos
         return {
             response: this.db.getAllCars(),
         };
