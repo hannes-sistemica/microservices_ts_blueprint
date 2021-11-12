@@ -1,0 +1,5 @@
+logs:
+  - type: file
+    path: "<PATH_LOG_FILE>/<LOG_FILE_NAME>.log"
+    service: "<APP_NAME>"
+    source: "<SOURCE>"

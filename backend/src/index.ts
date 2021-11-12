@@ -1,6 +1,7 @@
 import express from 'express';
 import rTracer from 'cls-rtracer';
 import morgan from 'morgan';
+import json from 'morgan-json';
 import swaggerUi from "swagger-ui-express";
 import ErrorHandler from './handler/ErrorHandler';
 import routes from './router';
@@ -10,6 +11,10 @@ import Logger from "./logger";
 const CONFIG = {
     PORT: 8008
 }
+const formatResp = json(':method :url :status :res[content-length] bytes :response-time ms');
+const formatReq = json(':method :url');
+
+
 
 // https://stackoverflow.com/questions/66365090/introducing-a-express-middleware-in-nodejs-typescript-oop
 class Server {
@@ -40,22 +45,11 @@ class Server {
     }
 
     loggingMiddleware() {
-        // this.app.use(morgan((tokens, req, res) => {
-        //     const tracingId = rTracer.id()
-        //     return [
-        //         `> requestId: ${tracingId} -`,
-        //         tokens.method(req, res),
-        //         tokens.url(req, res),
-        //         tokens.status(req, res),
-        //         tokens.res(req, res, 'content-length'), '-',
-        //         tokens['response-time'](req, res), 'ms',
-        //     ].join(' ');
-        // }));
-        this.app.use(morgan(`response :method :status :url (:res[content-length] bytes) :response-time ms`, {
+        this.app.use(morgan(formatResp, {
             stream: {write: (text) => this.logger.debug(text.trim())},
             immediate: false,
         }));
-        this.app.use(morgan(`request :method :url`, {
+        this.app.use(morgan(formatReq, {
             stream: {write: (text) => this.logger.debug(text.trim())},
             immediate: true,
         }));
@@ -100,6 +94,5 @@ class Server {
 const server = new Server();
 
 server.app.listen(CONFIG.PORT, () => {
-    // @ts-ignore
     // console.log(`> Server listening on ${CONFIG.PORT}`);
 });

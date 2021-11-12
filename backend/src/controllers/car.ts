@@ -17,6 +17,7 @@ export default class CarController {
 
     @Get("/:id")
     public async getCarById(id: number): Promise<CarResponse> {
+        // FIXME add a debug log entry, with module name
         return {
             response: this.db.getCarById(id),
         };
