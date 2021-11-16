@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  samplebackend:
+    container_name: samplebackend
+    image: blueprint/samplebackend/v1
+    ports:
+      - "8008:8008"
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "nodejs", "service": "samplebackend"}]'
+  datadog:
+    container_name: dd-agent
+    image: datadog/agent
+    links:
+      - web # ensures that the web app can send metrics
+    environment:
+      - DD_APM_ENABLED=true
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_AC_INCLUDE="name:samplebackend"
+      - DD_SITE=datadoghq.eu
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_API_KEY=${DD_API_KEY}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+
